@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+        <!-- Links -->
+        <ul class="navbar-nav">
+            <a class="navbar-brand" href="/">
+                <span class="navbar-text" style="font-family: Rockwell Extra Bold; colour: white;">Bean & Brew</span>
+            </a>
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/menu">Our Menu</a></li>
+            {% if current_user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="/user">{{ current_user.name }}'s Page</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                <li class="nav-item"><a class="nav-link" href="/signup">Sign Up</a></li>
+            {% endif %}
+        </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.is_authenticated %}
+                <li class="nav-item ml-auto"><span class="navbar-text">{{ current_user.email }}</span></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/order">Your Order</a></li>
+            </ul>
+        </div>
+</nav>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show">
+        <!-- Close Button (Bootstrap 5 uses data-bs-dismiss) -->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+{% if products == [] %}
+    <p>Come back later!</p>
+{% else %}
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="product card">
+                        <div class="card-body">
+                            <h1 class="card-title">{{ product.name }}</h1>
+                            <h2 class="card-subtitle text-muted">£{{ product.price }}</h2>
+                            <p class="card-text">{{ product.category }}</p>
+                            <p class="card-text">{{ product.description }}</p>
+                            <a class="btn btn-danger" href="/order/add/{{ product.name }}" role="button">Add to Order</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+        <ul class="navbar-nav">
+            <a class="navbar-brand" href="/"><span class="navbar-text" style="font-family: Rockwell Extra Bold; colour: white;">Bean & Brew</span></a>
+        </ul>
+</nav>
+
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title">Checkout</h1>
+    <h3 class="card-subtitle text-muted">Subtotal: £{{ price }}</h3>
+    <h4 class="card-subtitle text-muted">{{ summary }}</h4>
+    <p class="card-text">Please enter your choice of store, your personal details and your payment details to complete the payment.</p>
+        <form method="POST" >
+            {{form.csrf_token }}
+
+            <h1>Log In:</h1>
+            <p>
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control", value=current_user.name) }} 
+
+            </p>
+            <p>
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", value=current_user.email) }} 
+
+            </p>
+            <p>
+                {{ form.phone.label(class="form-label") }}
+                {{ form.phone(class="form-control") }} 
+
+            </p>
+            <p>
+                {{ form.store.label(class="form-label") }}
+                {{ form.store(class="form-control") }} 
+
+            </p>
+            <p>
+                {{ form.card_number.label(class="form-label") }}
+                {{ form.card_number(class="form-control") }} 
+
+            </p>
+            <p>
+                {{ form.name_on_card.label(class="form-label") }}
+                {{ form.name_on_card(class="form-control") }} 
+
+            </p>
+            <p>
+                {{ form.security_code.label(class="form-label") }}
+                {{ form.security_code(class="form-control") }} 
+
+            </p>
+            <p>
+                <input type="submit" value="Complete Payment" class="btn btn-success">
+            </p>
+        </form>
+  </div>
+</div>
+
+{% endblock %}

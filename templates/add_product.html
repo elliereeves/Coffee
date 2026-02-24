@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Add a New Product</h2>
+    <hr>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <!-- Product Name -->
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+            {% if form.name.errors %}
+                <div class="text-danger">{{ form.name.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Price -->
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control") }}
+            {% if form.price.errors %}
+                <div class="text-danger">{{ form.price.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Category -->
+        <div class="mb-3">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-select") }}
+            {% if form.category.errors %}
+                <div class="text-danger">{{ form.category.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control") }}
+            {% if form.description.errors %}
+                <div class="text-danger">{{ form.description.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Image Upload -->
+        <div class="mb-3">
+            {{ form.image.label(class="form-label") }}
+            {{ form.image(class="form-control") }}
+            {% if form.image.errors %}
+                <div class="text-danger">{{ form.image.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary">Add Product</button>
+        <a href="{{ url_for('main.menu') }}" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}
